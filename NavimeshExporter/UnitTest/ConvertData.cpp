@@ -17,6 +17,16 @@ using namespace std;
 typedef std::vector<float> Vertices;
 typedef std::vector<unsigned short> VerticeIndexes;
 
+enum SamplePolyFlags
+{
+    SAMPLE_POLYFLAGS_WALK = 0x01,       // Ability to walk (ground, grass, road)
+    SAMPLE_POLYFLAGS_SWIM = 0x02,       // Ability to swim (water).
+    SAMPLE_POLYFLAGS_DOOR = 0x04,       // Ability to move through doors.
+    SAMPLE_POLYFLAGS_JUMP = 0x08,       // Ability to jump.
+    SAMPLE_POLYFLAGS_DISABLED = 0x10,       // Disabled polygon
+    SAMPLE_POLYFLAGS_ALL = 0xffff   // All abilities.
+};
+
 Document* parseFile(const char* path) {
     FILE* fp = fopen(path, "r");
     if (fp == NULL){
@@ -224,7 +234,7 @@ bool dumpSoloTileData(NavimeshTileData* tileData, unsigned char** outData, int* 
 	header->detailMeshCount = polyCount;
 	header->detailVertCount = uniqueDetailVertCount;
 	header->detailTriCount = detailTriCount;
-	header->bvQuantFactor = 0.001f;
+	header->bvQuantFactor = 1;   // limited scene max length to 0xffff
 	header->offMeshBase = polyCount;
 	header->walkableHeight = tileData->walkableHeight;
 	header->walkableRadius = tileData->walkableRadius;
@@ -422,8 +432,8 @@ int main(){
     CharVector areasInfo;
     CharVector typeInfo;    
     for(unsigned short i = 0; i < vi.size()/3; i++){
-        flagsInfo.push_back(0);
-        areasInfo.push_back(0);
+        flagsInfo.push_back(SAMPLE_POLYFLAGS_WALK);
+        areasInfo.push_back(1<<SAMPLE_POLYFLAGS_WALK);
         typeInfo.push_back(DT_POLYTYPE_GROUND);
 
         unsigned short* base = &vi[i * 3];
@@ -432,7 +442,8 @@ int main(){
             if(edge2triangle[line].size() == 1){
                 edgeInfo.push_back(0);
             }else{
-                edgeInfo.push_back(edge2triangle[line][0] == i ? edge2triangle[line][1] : edge2triangle[line][0]);
+                unsigned short otherPolyRef = edge2triangle[line][0] == i ? edge2triangle[line][1] : edge2triangle[line][0];
+                edgeInfo.push_back(otherPolyRef + 1);
             }
         }
     }

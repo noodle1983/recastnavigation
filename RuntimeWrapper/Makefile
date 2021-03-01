@@ -12,6 +12,7 @@ SUBDIR= src \
 #########################################
 INC_DIR= -I. \
      -I$(PROJBASE)/../Detour/Include \
+     -I$(PROJBASE)/src \
 
 STATIC_LIB= \
 

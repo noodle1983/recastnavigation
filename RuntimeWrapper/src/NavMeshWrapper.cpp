@@ -128,6 +128,8 @@ bool NavMeshWrapper::init(const char* path){
     navMeshM = loadAll(path);
     if (navMeshM == nullptr) {return false;}
 
+    if (navQueryM) { dtFreeNavMeshQuery(navQueryM); }
+    navQueryM = dtAllocNavMeshQuery();
     navQueryM->init(navMeshM, 2048);
     return true;
 }
@@ -135,15 +137,15 @@ bool NavMeshWrapper::init(const char* path){
 bool NavMeshWrapper::findPath(float* start, float *end, vector<float>& path) {
     dtPolyRef startRef = 0;
 
-    navQueryM->findNearestPoly(start, queryExtM, &queryFilterM, &startRef, 0);
-    if (startRef == 0) {
-        return false;
+    dtStatus status = navQueryM->findNearestPoly(start, queryExtM, &queryFilterM, &startRef, 0);
+	if (dtStatusFailed(status)){
+		return false;
     }
 
     dtPolyRef endRef = 0;
-    navQueryM->findNearestPoly(end, queryExtM, &queryFilterM, &endRef, 0);
-    if (endRef == 0) {
-        return false;
+    status = navQueryM->findNearestPoly(end, queryExtM, &queryFilterM, &endRef, 0);
+	if (dtStatusFailed(status)){
+		return false;
     }
 
     int numPolys = 0;
@@ -164,7 +166,7 @@ bool NavMeshWrapper::findPath(float* start, float *end, vector<float>& path) {
         detourPath, nullptr, nullptr, &pathNum, MAX_POLYS, 0);
 
     path.clear();
-    for (int i = pathNum - 1; i >= 0; --i) {
+    for (int i = 0; i < pathNum; i++) {
         path.emplace_back(detourPath[i * 3]);
         path.emplace_back(detourPath[i * 3 + 1]);
         path.emplace_back(detourPath[i * 3 + 2]);
