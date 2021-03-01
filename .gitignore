@@ -8,6 +8,8 @@
 *.pdb
 *.so
 *.idb
+cscope.*
+.lib
 
 ## Linux exes have no extension
 RecastDemo/Bin/RecastDemo
