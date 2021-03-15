@@ -47,10 +47,10 @@ Document* parseFile(const char* path) {
     return doc;
 }
 
-float* parseVector(rapidjson::Value& value, float* v) {
-    v[0] = value["x"].GetFloat();
-    v[1] = value["y"].GetFloat();
-    v[2] = value["z"].GetFloat();
+float* parseVector(rapidjson::Value& value, float* v, float* offset) {
+    v[0] = value["x"].GetFloat() + (offset ? offset[0] : 0);
+    v[1] = value["y"].GetFloat() + (offset ? offset[1] : 0);
+    v[2] = value["z"].GetFloat() + (offset ? offset[2] : 0);
     return v;
 }
 
@@ -58,12 +58,12 @@ void logVector(float* v){
     cout << "x=" << v[0] << ", y=" << v[1] << ", z=" << v[2] << endl;
 }
 
-void parseVertices(rapidjson::Value& value, Vertices& v){
+void parseVertices(rapidjson::Value& value, Vertices& v, float* offset){
     v.clear();
     SizeType size = value.Size();
     v.resize(size * 3);
     for(SizeType i = 0; i < size; i++){
-        parseVector(value[i], &v[i*3]);
+        parseVector(value[i], &v[i*3], offset);
     }
 }
 
@@ -184,7 +184,7 @@ bool dumpSoloTileData(NavimeshTileData* tileData, unsigned char** outData, int* 
 	const int totVertCount = tileData->vertCount + storedOffMeshConCount*2;
     const int portalCount = tileData->portalCount;
     //const int edgeCount = tileData->triangleIndexCount;
-    const int maxLinkCount = tileData->triangleIndexCount + tileData->portalCount*2 + offMeshConLinkCount*2;
+    const int maxLinkCount = tileData->triangleIndexCount + portalCount*2 + offMeshConLinkCount*2;
 
 	int uniqueDetailVertCount = 0;
 	int detailTriCount = tileData->triangleIndexCount/3;
@@ -365,11 +365,11 @@ int main(){
     Document& data = *doc;
 
     float v[3];
-    parseVector(data["offset"], v);
+    parseVector(data["offset"], v, nullptr);
     logVector(v);
 
     Vertices vertices;
-    parseVertices(data["simpleMesh"]["vertices"], vertices);
+    parseVertices(data["simpleMesh"]["vertices"], vertices, v);
     logVertices(vertices);
 
     VerticeIndexes vi;
@@ -377,7 +377,7 @@ int main(){
     logVerticeIndexes(vi);
 
     Vertices normals; 
-    parseVertices(data["simpleMesh"]["normals"], normals);
+    parseVertices(data["simpleMesh"]["normals"], normals, nullptr);
     logVertices(normals);
 
     delete doc;
