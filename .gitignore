@@ -49,3 +49,8 @@ Docs/html
 ## IDE files
 .idea/
 cmake-build-*/
+
+.vs
+x64
+*.vcxproj.filters
+*.vcxproj.user

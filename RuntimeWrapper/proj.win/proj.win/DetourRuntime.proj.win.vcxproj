@@ -21,10 +21,26 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\interface.cpp" />
     <ClCompile Include="..\..\src\NavMeshWrapper.cpp" />
+    <ClCompile Include="..\..\src\nd_DetourCrowd_DetourCrowd.cpp" />
+    <ClCompile Include="..\..\src\nd_DetourCrowd_DetourLocalBoundary.cpp" />
+    <ClCompile Include="..\..\src\nd_DetourCrowd_DetourObstacleAvoidance.cpp" />
+    <ClCompile Include="..\..\src\nd_DetourCrowd_DetourPathCorridor.cpp" />
+    <ClCompile Include="..\..\src\nd_DetourCrowd_DetourPathQueue.cpp" />
+    <ClCompile Include="..\..\src\nd_DetourCrowd_DetourProximityGrid.cpp" />
+    <ClCompile Include="..\..\src\nd_DetourTileCache_DetourTileCache.cpp" />
+    <ClCompile Include="..\..\src\nd_DetourTileCache_DetourTileCacheBuilder.cpp" />
+    <ClCompile Include="..\..\src\nd_Detour_DetourAlloc.cpp" />
+    <ClCompile Include="..\..\src\nd_Detour_DetourAssert.cpp" />
+    <ClCompile Include="..\..\src\nd_Detour_DetourCommon.cpp" />
+    <ClCompile Include="..\..\src\nd_Detour_DetourNavMesh.cpp" />
+    <ClCompile Include="..\..\src\nd_Detour_DetourNavMeshBuilder.cpp" />
+    <ClCompile Include="..\..\src\nd_Detour_DetourNavMeshQuery.cpp" />
+    <ClCompile Include="..\..\src\nd_Detour_DetourNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\interface.h" />
     <ClInclude Include="..\..\src\NavMeshWrapper.h" />
+    <ClInclude Include="..\..\src\nd_header.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{58174DDC-6AFB-4633-A29F-62DEBDA5D6D5}</ProjectGuid>
@@ -112,7 +128,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PROJWIN32_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../;../;../../../Detour/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../;../;../../../Detour/Include;../../../DetourTileCache/Include;../../../DetourCrowd/Include</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>

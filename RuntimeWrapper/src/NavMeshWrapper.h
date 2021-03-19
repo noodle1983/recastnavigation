@@ -3,10 +3,11 @@
 
 #include <string>
 #include <vector>
-#include "DetourNavMesh.h"
-#include "DetourNavMeshQuery.h"
+#include "nd_header.h"
 
 namespace nd{
+#include "DetourNavMesh.h"
+#include "DetourNavMeshQuery.h"
 
     class NavMeshWrapper{
     public:
@@ -17,7 +18,19 @@ namespace nd{
         virtual ~NavMeshWrapper();
 
         bool init(const char* path);
+
+		float getAreaCost(int area);
+		bool setAreaCost(int area, float cost);
+		unsigned short getIncludeFlag();
+		void setIncludeFlag(unsigned short flag);
+		unsigned short getExcludeFlag();
+		void setExcludeFlag(unsigned short flag);
+		void getQueryExt(float* extVector3);
+		void setQueryExt(float* extVector3);
+		
+        float raycast(float* start, float *end);
         bool findPath(float* start, float *end, std::vector<float>& path);
+		bool closestPointOnMesh(float* testPoint, float* inMeshPoint);
 
     private:
         dtNavMesh* navMeshM;

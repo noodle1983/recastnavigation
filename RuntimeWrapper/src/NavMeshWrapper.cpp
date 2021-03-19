@@ -134,6 +134,42 @@ bool NavMeshWrapper::init(const char* path){
     return true;
 }
 
+        dtQueryFilter queryFilterM;
+        float queryExtM[3];
+float NavMeshWrapper::getAreaCost(int area) {
+	if (area < 0 || area >= DT_MAX_AREAS) { return -1; }
+	return queryFilterM.getAreaCost(area);
+}
+
+bool NavMeshWrapper::setAreaCost(int area, float cost){
+	if (area < 0 || area >= DT_MAX_AREAS) { return false; }
+	queryFilterM.setAreaCost(area, cost);
+	return true;
+}
+
+unsigned short NavMeshWrapper::getIncludeFlag(){
+	return queryFilterM.getIncludeFlags();
+}
+
+void NavMeshWrapper::setIncludeFlag(unsigned short flag){
+	return queryFilterM.setIncludeFlags(flag);
+}
+
+unsigned short NavMeshWrapper::getExcludeFlag() {
+	return queryFilterM.getExcludeFlags();
+}
+void NavMeshWrapper::setExcludeFlag(unsigned short flag){
+	return queryFilterM.setExcludeFlags(flag);
+}
+
+void NavMeshWrapper::getQueryExt(float* extVector3){
+	dtVcopy(extVector3, queryExtM);
+}
+
+void NavMeshWrapper::setQueryExt(float* extVector3){
+	dtVcopy(queryExtM, extVector3);
+}
+
 bool NavMeshWrapper::findPath(float* start, float *end, vector<float>& path) {
     dtPolyRef startRef = 0;
 
@@ -174,4 +210,34 @@ bool NavMeshWrapper::findPath(float* start, float *end, vector<float>& path) {
     return true;
 }
 
+bool NavMeshWrapper::closestPointOnMesh(float* testPoint, float* inMeshPoint) {
+    dtPolyRef startRef = 0;
+
+    dtStatus status = navQueryM->findNearestPoly(testPoint, queryExtM, &queryFilterM, &startRef, 0);
+	if (dtStatusFailed(status)){
+		return false;
+    }
+
+	navQueryM->closestPointOnPoly(startRef, testPoint, inMeshPoint, 0);
+	return true;
+}
+
+float NavMeshWrapper::raycast(float* start, float *end)
+{
+    dtPolyRef startRef = 0;
+
+    dtStatus status = navQueryM->findNearestPoly(start, queryExtM, &queryFilterM, &startRef, 0);
+	if (dtStatusFailed(status)){
+		return -1;
+    }
+
+	dtRaycastHit hit;
+    status = navQueryM->raycast(startRef, start, end, &queryFilterM, 0, &hit);
+	if (dtStatusFailed(status)){
+		return -1;
+    }
+	if (hit.t >= 1.0f) { return 1; }
+
+	return hit.t;
+}
 

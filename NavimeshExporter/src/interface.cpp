@@ -3,9 +3,12 @@
 #include "MeshParser.hpp"
 using namespace nd;
 
+#include "nd_header.h"
+namespace nd{
 #include "Detour/DetourCommon.h"
 #include "Detour/DetourNavMesh.h"
 #include "Detour/DetourNavMeshBuilder.cpp"
+}
 
 #include <cstring>
 using namespace std;
@@ -44,38 +47,36 @@ struct NavimeshTileData{
 	float bmax[3];
 };
 
+const float BvQuantFactor = 1;
 static int createBVTree(NavimeshTileData* tileData, dtBVNode* nodes, int /*nnodes*/)
 {
 	// Build tree
     const int polyCount = tileData->triangleIndexCount/3;
 	BVItem* items = (BVItem*)dtAlloc(sizeof(BVItem)*polyCount, DT_ALLOC_TEMP);
+	float* tbmin = tileData->bmin;
 	for (int i = 0; i < polyCount; i++)
 	{
 		BVItem& it = items[i];
 		it.i = i;
+		float bmin[3];
+		float bmax[3];
 
         const unsigned short* p = &tileData->triangles[i*3];
-        it.bmin[0] = (unsigned short)dtMathFloorf(tileData->verts[p[0] * 3 + 0]);
-        it.bmin[1] = (unsigned short)dtMathFloorf(tileData->verts[p[0] * 3 + 1]);
-        it.bmin[2] = (unsigned short)dtMathFloorf(tileData->verts[p[0] * 3 + 2]);
+		dtVcopy(bmin, &tileData->verts[p[0] * 3]);
+		dtVcopy(bmax, &tileData->verts[p[0] * 3]);
 
-        it.bmax[0] = (unsigned short)dtMathCeilf(tileData->verts[p[0] * 3 + 0]);
-        it.bmax[1] = (unsigned short)dtMathCeilf(tileData->verts[p[0] * 3 + 1]);
-        it.bmax[2] = (unsigned short)dtMathCeilf(tileData->verts[p[0] * 3 + 2]);
         for (int j = 1; j < 3; ++j)
         {
-            float x = tileData->verts[p[j] * 3 + 0];
-            float y = tileData->verts[p[j] * 3 + 1];
-            float z = tileData->verts[p[j] * 3 + 2];
-
-            if (x < it.bmin[0]) it.bmin[0] = (unsigned short)dtMathFloorf(x);
-            if (y < it.bmin[1]) it.bmin[1] = (unsigned short)dtMathFloorf(y);
-            if (z < it.bmin[2]) it.bmin[2] = (unsigned short)dtMathFloorf(z);
-
-            if (x > it.bmax[0]) it.bmax[0] = (unsigned short)dtMathCeilf(x);
-            if (y > it.bmax[1]) it.bmax[1] = (unsigned short)dtMathCeilf(y);
-            if (z > it.bmax[2]) it.bmax[2] = (unsigned short)dtMathCeilf(z);
+			dtVmin(bmin, &tileData->verts[p[j] * 3]);
+			dtVmax(bmax, &tileData->verts[p[j] * 3]);
         }
+        it.bmin[0] = (unsigned short)dtMathFloorf((bmin[0]-tbmin[0])*BvQuantFactor);
+        it.bmin[1] = (unsigned short)dtMathFloorf((bmin[1]-tbmin[1])*BvQuantFactor);
+        it.bmin[2] = (unsigned short)dtMathFloorf((bmin[2]-tbmin[2])*BvQuantFactor);
+
+        it.bmax[0] = (unsigned short)dtMathCeilf((bmax[0]-tbmin[0])*BvQuantFactor);
+        it.bmax[1] = (unsigned short)dtMathCeilf((bmax[1]-tbmin[1])*BvQuantFactor);
+        it.bmax[2] = (unsigned short)dtMathCeilf((bmax[2]-tbmin[2])*BvQuantFactor);
 	}
 	
 	int curNode = 0;
@@ -153,7 +154,7 @@ bool dumpSoloTileData(NavimeshTileData* tileData, unsigned char** outData, int* 
 	header->detailMeshCount = polyCount;
 	header->detailVertCount = uniqueDetailVertCount;
 	header->detailTriCount = detailTriCount;
-	header->bvQuantFactor = 1;   // limited scene max length to 0xffff
+	header->bvQuantFactor = BvQuantFactor;   // limited scene max length to 0xffff
 	header->offMeshBase = polyCount;
 	header->walkableHeight = tileData->walkableHeight;
 	header->walkableRadius = tileData->walkableRadius;
@@ -305,17 +306,8 @@ char* exportDetourFormatFile(const char* detourMeshPath, const char* detourBinPa
 	dtVcopy(bmax, tileData.verts);
     for(int i = 0; i < tileData.vertCount/3; i++){
         float* base = &tileData.verts[i*3];
-        float x = base[0];
-        float y = base[1];
-        float z = base[2];
-
-        if (x < bmin[0]) bmin[0] = x;
-        if (y < bmin[1]) bmin[1] = y;
-        if (z < bmin[2]) bmin[2] = z;
-
-        if (x > bmax[0]) bmax[0] = x;
-        if (y > bmax[1]) bmax[1] = y;
-        if (z > bmax[2]) bmax[2] = z;
+		dtVmin(bmin, base);
+		dtVmax(bmax, base);
     }
 
     // per vertice/edge data

@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\DetourAlloc.cpp" />
-    <ClCompile Include="..\..\src\DetourAssert.cpp" />
-    <ClCompile Include="..\..\src\DetourCommon.cpp" />
-    <ClCompile Include="..\..\src\DetourNavMesh.cpp" />
     <ClCompile Include="..\..\src\interface.cpp" />
+    <ClCompile Include="..\..\src\nd_Detour_DetourAlloc.cpp" />
+    <ClCompile Include="..\..\src\nd_Detour_DetourAssert.cpp" />
+    <ClCompile Include="..\..\src\nd_Detour_DetourCommon.cpp" />
+    <ClCompile Include="..\..\src\nd_Detour_DetourNavMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\interface.h" />
