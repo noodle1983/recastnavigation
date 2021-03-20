@@ -136,6 +136,10 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>echo "$(TargetPath) -&gt; ..\..\..\..\Assets\NavimeshMarker\RuntimePlugins\x64\"
+cp $(TargetPath) ..\..\..\..\Assets\NavimeshMarker\RuntimePlugins\x64\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
