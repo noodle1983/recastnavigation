@@ -30,6 +30,7 @@ namespace nd{
 		
         float raycast(float* start, float *end);
         bool findPath(float* start, float *end, std::vector<float>& path);
+        bool findFullDirectPath(float* start, float *end, std::vector<float>& path, unsigned maxPoints = 512, unsigned testAdvanceSteps = 1);
 		bool closestPointOnMesh(float* testPoint, float* inMeshPoint);
 
     private:

@@ -22,6 +22,7 @@ extern "C" {
 
 	LIB_API bool nd_closestPointOnMesh(void* p, float* testPoint, float *inMeshPoint);
 	LIB_API bool nd_findPath(void* p, float* start, float *end, float* pathArray, int* len);
+	LIB_API bool nd_findFullDirectPath(void* p, float* start, float *end, float* pathArray, int* len, int testAdvanceSteps);
 	LIB_API float nd_raycast(void* p, float* start, float *end);
 };
 

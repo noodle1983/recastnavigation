@@ -91,6 +91,25 @@ bool nd_findPath(void* p, float* start, float* end, float* pathArray, int* float
 	return true;
 }
 
+bool nd_findFullDirectPath(void* p, float* start, float* end, float* pathArray, int* floatNum, int testAdvanceSteps) {
+	if (p == nullptr) { return false; }
+	NavMeshWrapper* navmesh = (NavMeshWrapper*)p;
+	std::vector<float> path;
+	unsigned maxPoints = (unsigned)(*floatNum) / 3;
+	if (!navmesh->findFullDirectPath(start, end, path, maxPoints, testAdvanceSteps)) {
+		return false;
+	}
+
+	memset(pathArray, 0, *floatNum * sizeof(float));
+	int arraySize = *floatNum > path.size() ? (int)path.size() : *floatNum;
+	for (size_t i = 0; i < arraySize; i++) {
+		pathArray[i] = path[i];
+	}
+	*floatNum = arraySize;
+	return true;
+}
+
+
 bool nd_closestPointOnMesh(void* p, float* testPoint, float* inMeshPoint) {
 	if (p == nullptr) { return false; }
 	NavMeshWrapper* navmesh = (NavMeshWrapper*)p;
