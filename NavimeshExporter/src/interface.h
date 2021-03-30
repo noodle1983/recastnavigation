@@ -9,6 +9,7 @@
 
 extern "C" {
 	LIB_API char* exportDetourFormatFile(const char* detourMeshPath, const char* detourBinPath);
+	LIB_API char* exportTiledDetourFormatFile(const char* detourMeshPath, const char* detourBinPath);
 };
 
 #endif

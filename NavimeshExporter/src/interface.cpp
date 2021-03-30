@@ -8,9 +8,34 @@ namespace nd{
 #include "Detour/DetourCommon.h"
 #include "Detour/DetourNavMesh.h"
 #include "Detour/DetourNavMeshBuilder.cpp"
+
+	template<class T> inline T rcMin(T a, T b) { return a < b ? a : b; }
+	inline unsigned int nextPow2(unsigned int v)
+	{
+		v--;
+		v |= v >> 1;
+		v |= v >> 2;
+		v |= v >> 4;
+		v |= v >> 8;
+		v |= v >> 16;
+		v++;
+		return v;
+	}
+	inline unsigned int ilog2(unsigned int v)
+	{
+		unsigned int r;
+		unsigned int shift;
+		r = (v > 0xffff) << 4; v >>= r;
+		shift = (v > 0xff) << 3; v >>= shift; r |= shift;
+		shift = (v > 0xf) << 2; v >>= shift; r |= shift;
+		shift = (v > 0x3) << 1; v >>= shift; r |= shift;
+		r |= (v >> 1);
+		return r;
+	}
 }
 
 #include <cstring>
+#include <memory>
 using namespace std;
 
 //[StructLayout(LayoutKind.Sequential)]
@@ -28,8 +53,7 @@ struct NavimeshTileData{
 
     // per triangle data
     short* polyFlags;
-    char* polyAreas;
-    char* polyType;
+    char* polyAreaTypes;
 
     // portal count
     short portalCount;
@@ -176,8 +200,7 @@ bool dumpSoloTileData(NavimeshTileData* tileData, unsigned char** outData, int* 
 		dtPoly* p = &navPolys[i];
 		p->vertCount = 3;
 		p->flags = tileData->polyFlags[i];
-		p->setArea(tileData->polyAreas[i]);
-		p->setType(tileData->polyType[i]);
+		p->areaAndtype = tileData->polyAreaTypes[i];
         for(int j = 0; j < p->vertCount; j++){
             p->verts[j] = tileData->triangles[i*3 + j];
             p->neis[j] = tileData->neis[i*3 + j];
@@ -294,6 +317,9 @@ char* exportDetourFormatFile(const char* detourMeshPath, const char* detourBinPa
 	if (mesh == nullptr) { return dupstr("failed to parse the detour mesh file!"); }
 	auto& vertices = mesh->vertices;
 	auto& vi = mesh->triangles;
+	auto& trianglesFlag = mesh->trianglesFlag;
+	auto& trianglesAreaType = mesh->trianglesAreaType;
+	auto& lineNeis = mesh->lineNeis;
 
     struct NavimeshTileData tileData;
     memset(&tileData, 0, sizeof(NavimeshTileData));
@@ -333,12 +359,10 @@ char* exportDetourFormatFile(const char* detourMeshPath, const char* detourBinPa
     VerticeIndexes edgeInfo;
     VerticeIndexes flagsInfo;
     using CharVector = vector<char>;
-    CharVector areasInfo;
-    CharVector typeInfo;    
+    CharVector areaTypesInfo;
     for(unsigned short i = 0; i < vi.size()/3; i++){
-        flagsInfo.push_back(SAMPLE_POLYFLAGS_WALK);
-        areasInfo.push_back(1<<SAMPLE_POLYFLAGS_WALK);
-        typeInfo.push_back(DT_POLYTYPE_GROUND);
+        flagsInfo.push_back(trianglesFlag[i]);
+        areaTypesInfo.push_back(trianglesAreaType[i]);
 
         unsigned short* base = &vi[i * 3];
         for(int j = 0; j < 3; j++){
@@ -355,8 +379,7 @@ char* exportDetourFormatFile(const char* detourMeshPath, const char* detourBinPa
 
     // per triangle data
     tileData.polyFlags = (short*)flagsInfo.data();
-    tileData.polyAreas = areasInfo.data();
-    tileData.polyType = typeInfo.data();
+    tileData.polyAreaTypes = areaTypesInfo.data();
 
     // portal count
     tileData.portalCount = 0;
@@ -397,5 +420,150 @@ char* exportDetourFormatFile(const char* detourMeshPath, const char* detourBinPa
     }
 	delete mesh;
     return nullptr;
+}
+
+unsigned char* buildTileMesh(TiledMesh* mesh, int& dataSize){
+	auto& vertices = mesh->vertices;
+	auto& vi = mesh->triangles;
+	auto& trianglesFlag = mesh->trianglesFlag;
+	auto& trianglesAreaType = mesh->trianglesAreaType;
+	auto& lineNeis = mesh->lineNeis;
+	auto tx = mesh->tx;
+	auto ty = mesh->ty;
+
+    struct NavimeshTileData tileData;
+    memset(&tileData, 0, sizeof(NavimeshTileData));
+
+    tileData.verts = vertices.data();
+    tileData.vertCount = (int)vertices.size();
+	float* bmin = tileData.bmin;
+	float* bmax = tileData.bmax;
+	dtVcopy(bmin, tileData.verts);
+	dtVcopy(bmax, tileData.verts);
+    for(int i = 0; i < tileData.vertCount/3; i++){
+        float* base = &tileData.verts[i*3];
+		dtVmin(bmin, base);
+		dtVmax(bmax, base);
+    }
+
+    // per vertice/edge data
+    tileData.triangles = vi.data();
+    tileData.triangleIndexCount = (int)vi.size();
+    using Edge2Triangle = map<uint64_t, vector<unsigned short>>;
+    Edge2Triangle edge2triangle;
+    auto make_line = [](uint64_t a, uint64_t b){
+        return a > b ? ((b<<32) | a) : ((a<<32) | b);
+    };
+    for(unsigned short i = 0; i < vi.size()/3; i++){
+        unsigned short* base = &vi[i * 3];
+        uint64_t line1 = make_line(base[0], base[1]);
+        edge2triangle[line1].push_back(i);
+
+        uint64_t line2 = make_line(base[1], base[2]);
+        edge2triangle[line2].push_back(i);
+
+        uint64_t line3 = make_line(base[2], base[0]);
+        edge2triangle[line3].push_back(i);
+    }
+
+    VerticeIndexes edgeInfo;
+    VerticeIndexes flagsInfo;
+    using CharVector = vector<char>;
+    CharVector areaTypesInfo;
+    CharVector typeInfo;    
+    for(unsigned short i = 0; i < vi.size()/3; i++){
+        flagsInfo.push_back(trianglesFlag[i]);
+        areaTypesInfo.push_back(trianglesAreaType[i]);
+
+        unsigned short* base = &vi[i * 3];
+		unsigned short* lineNeisBase = &lineNeis[i * 3];
+        for(int j = 0; j < 3; j++){
+            uint64_t line = make_line(base[j], base[(j+1)%3]);
+			if (lineNeisBase[j] & DT_EXT_LINK) {
+                edgeInfo.push_back(lineNeisBase[i]);
+			}
+            else if(edge2triangle[line].size() == 1){
+                edgeInfo.push_back(0);
+            }else{
+                unsigned short otherPolyRef = edge2triangle[line][0] == i ? edge2triangle[line][1] : edge2triangle[line][0];
+                edgeInfo.push_back(otherPolyRef + 1);
+            }
+        }
+    }
+    tileData.neis = edgeInfo.data();
+
+    // per triangle data
+    tileData.polyFlags = (short*)flagsInfo.data();
+    tileData.polyAreaTypes = areaTypesInfo.data();
+
+    // portal count
+    tileData.portalCount = 0;
+
+    tileData.buildBvTree = true;
+	tileData.tileX = tx;
+	tileData.tileY = ty;
+	tileData.tileLayer = 0;
+	tileData.userId = 0;
+
+	tileData.walkableHeight = 0;
+	tileData.walkableRadius = 0;
+	tileData.walkableClimb = 0;
+
+    unsigned char* outData = NULL;
+    bool ret = dumpSoloTileData(&tileData, &outData, &dataSize);
+    return outData;
+}
+
+
+char* exportTiledDetourFormatFile(const char* detourMeshPath, const char* detourBinPath) {
+	auto mesh = parseMesh(detourMeshPath);
+	if (mesh == nullptr) { return dupstr("failed to parse the detour mesh file!"); }
+
+	shared_ptr<Mesh> meshDeletor(mesh);
+	if (mesh->tiledMeshList.size() <= 1) {
+		return exportDetourFormatFile(detourMeshPath, detourBinPath);
+	}
+
+	dtNavMesh* navMesh = dtAllocNavMesh();
+	if (!navMesh) { return dupstr("Could not create Detour navmesh"); }
+	shared_ptr<dtNavMesh> navMeshDeletor(navMesh, [](auto p) {dtFreeNavMesh(p); });
+
+	dtNavMeshParams params;
+	dtVcopy(params.orig, mesh->bmin.data());
+	params.tileWidth = mesh->tileWidth;
+	params.tileHeight = mesh->tileHeight;
+
+	int tileBits = ilog2(nextPow2(mesh->tw* mesh->th));
+	if (tileBits > 14) { return dupstr("too many tiles!"); }
+
+	int polyBits = 22 - tileBits;
+	params.maxTiles = 1 << tileBits;
+	params.maxPolys = 1 << polyBits;
+	
+	dtStatus status = navMesh->init(&params);
+	if (dtStatusFailed(status))
+	{
+		return dupstr("Could not init Detour navmesh");
+	}
+
+	for (auto & tiledMesh : mesh->tiledMeshList)
+	{
+		int polyCount = (int)tiledMesh.triangles.size() / 3;
+		if (polyCount > params.maxPolys) { return dupstr("too many polys in a tile!"); }
+
+		int dataSize = 0;
+		unsigned char* data = buildTileMesh(&tiledMesh, dataSize);
+		if (data)
+		{
+			// Remove any previous data (navmesh owns and deletes the data).
+			navMesh->removeTile(navMesh->getTileRefAt(tiledMesh.tx, tiledMesh.ty, 0), 0, 0);
+			// Let the navmesh own the data.
+			dtStatus status = navMesh->addTile(data, dataSize, DT_TILE_FREE_DATA, 0, 0);
+			if (dtStatusFailed(status)) { dtFree(data); }
+		}
+	}
+
+	saveAll(detourBinPath, navMesh);
+	return nullptr;
 }
 

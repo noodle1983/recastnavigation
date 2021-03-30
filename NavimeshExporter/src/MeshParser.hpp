@@ -23,8 +23,10 @@ using namespace std;
 
 namespace nd{
     using Vertices = std::vector<float>;
-    using LineNeis = std::vector<short>;
+    using LineNeis = std::vector<unsigned short>;
     using Triangles = std::vector<unsigned short>;
+	using TrianglesFlag = std::vector<unsigned>;
+	using TrianglesAreaType = std::vector<uint8_t>;
     using Normals = std::vector<float>;
     using Vector3 = std::array<float, 3>;
     using TriVector3 = std::array<Vector3, 3>;
@@ -40,11 +42,36 @@ namespace nd{
 		SAMPLE_POLYFLAGS_ALL = 0xffff   // All abilities.
 	};
 
+	struct TiledMesh {
+		int tx;
+		int ty;
+        Vertices vertices;
+        Triangles triangles;
+        Normals normals;
+		TrianglesFlag trianglesFlag;
+		TrianglesAreaType trianglesAreaType;
+		LineNeis lineNeis;
+	};
+
+    using TiledMeshList = std::vector<TiledMesh>;
 
     struct Mesh{
         Vertices vertices;
         Triangles triangles;
         Normals normals;
+		TrianglesFlag trianglesFlag;
+		TrianglesAreaType trianglesAreaType;
+		LineNeis lineNeis;
+		unsigned navFlag;
+		unsigned navAreaType;
+		Vector3 bmin;
+		Vector3 bmax;
+
+		unsigned tw;
+		unsigned th;
+		float tileWidth;
+		float tileHeight;
+		TiledMeshList tiledMeshList;
 
         Mesh(const Mesh& other) = default;
         Mesh() = default;
@@ -54,10 +81,18 @@ namespace nd{
             vertices = std::move(m->vertices);
             triangles = std::move(m->triangles);
             normals = std::move(m->normals);
+            trianglesFlag = std::move(m->trianglesFlag);
+            trianglesAreaType = std::move(m->trianglesAreaType);
+            lineNeis = std::move(m->lineNeis);
+            navFlag = m->navFlag;
+            navAreaType = m->navAreaType;
             delete m;
         }
 
-        void Clear() { vertices.clear(); triangles.clear(); normals.clear(); }
+        void Clear() { 
+			vertices.clear(); triangles.clear(); normals.clear();
+            trianglesFlag.clear(); trianglesAreaType.clear(); lineNeis.clear();
+		}
 
         Vector3 GetPoint(int index) { 
             if (index < 0 || (index*3+2) >= (int)vertices.size()){return {0,0,0};}
@@ -82,6 +117,27 @@ namespace nd{
             normals.push_back(normal[1]);
             normals.push_back(normal[2]);
             return index;
+        }
+
+        unsigned GetTriangleFlag(unsigned triangleIndex) {
+            if (trianglesFlag.size() > triangleIndex) {
+                return trianglesFlag[triangleIndex];
+            }
+            return navFlag;
+        }
+
+        unsigned char GetTriangleAreaType(unsigned triangleIndex) {
+            if (trianglesAreaType.size() > triangleIndex) {
+                return trianglesAreaType[triangleIndex];
+            }
+            return navAreaType;
+        }
+
+        uint16_t GetLineFlags(unsigned lineIndex) {
+            if (lineNeis.size() > lineIndex) {
+                return  lineNeis[lineIndex];
+            }
+            return 0;
         }
 
     };
@@ -151,6 +207,52 @@ namespace nd{
 		cout << endl;
 	}
 
+	void parseTrianglesFlag(rapidjson::Value& value, TrianglesFlag& ta) {
+		ta.clear();
+		SizeType size = value.Size();
+		ta.resize(size);
+		for (SizeType i = 0; i < size; i++) {
+			ta[i] = value[i].GetUint();
+		}
+	}
+
+	void parseTrianglesArea(rapidjson::Value& value, TrianglesAreaType& ta) {
+		ta.clear();
+		SizeType size = value.Size();
+		ta.resize(size);
+		for (SizeType i = 0; i < size; i++) {
+			ta[i] = (uint8_t)value[i].GetUint();
+		}
+	}
+
+	void parseLineNeis(rapidjson::Value& value, LineNeis& ln) {
+		ln.clear();
+		SizeType size = value.Size();
+		ln.resize(size);
+		for (SizeType i = 0; i < size; i++) {
+			ln[i] = value[i].GetUint();
+		}
+	}
+
+	void parseTiledMesh(rapidjson::Value& value, TiledMesh& tml) {
+		tml.tx = value["tx"].GetInt();
+		tml.ty = value["ty"].GetInt();
+		parseVertices(value["vertices"], tml.vertices, nullptr);
+		parseVerticeIndexes(value["triangles"], tml.triangles);
+		parseVertices(value["normals"], tml.normals, nullptr);
+		parseTrianglesFlag(value["trianglesFlag"], tml.trianglesFlag);
+		parseTrianglesArea(value["trianglesAreaType"], tml.trianglesAreaType);
+		parseLineNeis(value["exLinesFlag"], tml.lineNeis); 
+	}
+
+	void parseTiledMeshList(rapidjson::Value& value, TiledMeshList& tml) {
+		tml.clear();
+		SizeType size = value.Size();
+		tml.resize(size);
+		for (SizeType i = 0; i < size; i++) {
+			parseTiledMesh(value[i], tml[i]);
+		}
+	}
 
 	Mesh* parseMesh(const char* path) {
 		auto doc = parseFile(path);
@@ -161,9 +263,21 @@ namespace nd{
 		parseVector(data["offset"], offset, nullptr);
 
 		Mesh* mesh = new Mesh();
+		mesh->tw = data["tw"].GetInt();
+		mesh->th = data["th"].GetInt();
+		mesh->tileWidth = data["tileWidth"].GetFloat();
+		mesh->tileHeight = data["tileHeight"].GetFloat();
+		parseVector(data["bmin"], mesh->bmin.data(), nullptr);
+		parseVector(data["bmax"], mesh->bmax.data(), nullptr);
 		parseVertices(data["simpleMesh"]["vertices"], mesh->vertices, offset);
 		parseVerticeIndexes(data["simpleMesh"]["triangles"], mesh->triangles);
 		parseVertices(data["simpleMesh"]["normals"], mesh->normals, nullptr);
+		mesh->navFlag = data["navigationFlag"].GetUint();
+		mesh->navAreaType = data["navigationAreaType"].GetUint();
+		if (data.HasMember("trianglesFlag")) { parseTrianglesFlag(data["trianglesFlag"], mesh->trianglesFlag); }
+		if (data.HasMember("trianglesAreaType")) { parseTrianglesArea(data["trianglesAreaType"], mesh->trianglesAreaType); }
+		if (data.HasMember("exLinesFlag")) { parseLineNeis(data["exLinesFlag"], mesh->lineNeis); }
+		if (data.HasMember("tiledMeshes")) { parseTiledMeshList(data["tiledMeshes"], mesh->tiledMeshList); }
 
 		delete doc;
 		return mesh;
