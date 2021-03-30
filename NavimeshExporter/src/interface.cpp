@@ -471,6 +471,7 @@ unsigned char* buildTileMesh(TiledMesh* mesh, int& dataSize){
     using CharVector = vector<char>;
     CharVector areaTypesInfo;
     CharVector typeInfo;    
+	short portalCount = 0;
     for(unsigned short i = 0; i < vi.size()/3; i++){
         flagsInfo.push_back(trianglesFlag[i]);
         areaTypesInfo.push_back(trianglesAreaType[i]);
@@ -480,7 +481,8 @@ unsigned char* buildTileMesh(TiledMesh* mesh, int& dataSize){
         for(int j = 0; j < 3; j++){
             uint64_t line = make_line(base[j], base[(j+1)%3]);
 			if (lineNeisBase[j] & DT_EXT_LINK) {
-                edgeInfo.push_back(lineNeisBase[i]);
+                edgeInfo.push_back(lineNeisBase[j]);
+				portalCount++;
 			}
             else if(edge2triangle[line].size() == 1){
                 edgeInfo.push_back(0);
@@ -497,7 +499,7 @@ unsigned char* buildTileMesh(TiledMesh* mesh, int& dataSize){
     tileData.polyAreaTypes = areaTypesInfo.data();
 
     // portal count
-    tileData.portalCount = 0;
+	tileData.portalCount = portalCount;
 
     tileData.buildBvTree = true;
 	tileData.tileX = tx;
