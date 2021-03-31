@@ -163,10 +163,10 @@ namespace nd{
 		return doc;
 	}
 
-	float* parseVector(rapidjson::Value& value, float* v, float* offset) {
-		v[0] = value["x"].GetFloat() + (offset ? offset[0] : 0);
-		v[1] = value["y"].GetFloat() + (offset ? offset[1] : 0);
-		v[2] = value["z"].GetFloat() + (offset ? offset[2] : 0);
+	float* parseVector(rapidjson::Value& value, float* v) {
+		v[0] = value["x"].GetFloat();
+		v[1] = value["y"].GetFloat();
+		v[2] = value["z"].GetFloat();
 		return v;
 	}
 
@@ -174,12 +174,12 @@ namespace nd{
 		cout << "x=" << v[0] << ", y=" << v[1] << ", z=" << v[2] << endl;
 	}
 
-	void parseVertices(rapidjson::Value& value, Vertices& v, float* offset) {
+	void parseVertices(rapidjson::Value& value, Vertices& v) {
 		v.clear();
 		SizeType size = value.Size();
 		v.resize(size * 3);
 		for (SizeType i = 0; i < size; i++) {
-			parseVector(value[i], &v[i * 3], offset);
+			parseVector(value[i], &v[i * 3]);
 		}
 	}
 
@@ -237,9 +237,9 @@ namespace nd{
 	void parseTiledMesh(rapidjson::Value& value, TiledMesh& tml) {
 		tml.tx = value["tx"].GetInt();
 		tml.ty = value["ty"].GetInt();
-		parseVertices(value["vertices"], tml.vertices, nullptr);
+		parseVertices(value["vertices"], tml.vertices);
 		parseVerticeIndexes(value["triangles"], tml.triangles);
-		parseVertices(value["normals"], tml.normals, nullptr);
+		parseVertices(value["normals"], tml.normals);
 		parseTrianglesFlag(value["trianglesFlag"], tml.trianglesFlag);
 		parseTrianglesArea(value["trianglesAreaType"], tml.trianglesAreaType);
 		parseLineNeis(value["exLinesFlag"], tml.lineNeis); 
@@ -259,19 +259,17 @@ namespace nd{
 		if (doc == nullptr) { return nullptr; }
 
 		Document& data = *doc;
-		float offset[3];
-		parseVector(data["offset"], offset, nullptr);
 
 		Mesh* mesh = new Mesh();
 		mesh->tw = data["tw"].GetInt();
 		mesh->th = data["th"].GetInt();
 		mesh->tileWidth = data["tileWidth"].GetFloat();
 		mesh->tileHeight = data["tileHeight"].GetFloat();
-		parseVector(data["bmin"], mesh->bmin.data(), nullptr);
-		parseVector(data["bmax"], mesh->bmax.data(), nullptr);
-		parseVertices(data["simpleMesh"]["vertices"], mesh->vertices, offset);
+		parseVector(data["bmin"], mesh->bmin.data());
+		parseVector(data["bmax"], mesh->bmax.data());
+		parseVertices(data["simpleMesh"]["vertices"], mesh->vertices);
 		parseVerticeIndexes(data["simpleMesh"]["triangles"], mesh->triangles);
-		parseVertices(data["simpleMesh"]["normals"], mesh->normals, nullptr);
+		parseVertices(data["simpleMesh"]["normals"], mesh->normals);
 		mesh->navFlag = data["navigationFlag"].GetUint();
 		mesh->navAreaType = data["navigationAreaType"].GetUint();
 		if (data.HasMember("trianglesFlag")) { parseTrianglesFlag(data["trianglesFlag"], mesh->trianglesFlag); }
