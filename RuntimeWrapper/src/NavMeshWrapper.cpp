@@ -134,8 +134,6 @@ bool NavMeshWrapper::init(const char* path){
     return true;
 }
 
-        dtQueryFilter queryFilterM;
-        float queryExtM[3];
 float NavMeshWrapper::getAreaCost(int area) {
 	if (area < 0 || area >= DT_MAX_AREAS) { return -1; }
 	return queryFilterM.getAreaCost(area);
