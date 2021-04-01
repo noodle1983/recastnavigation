@@ -20,6 +20,10 @@ using namespace rapidjson;
 #include <tuple>
 using namespace std;
 
+#if defined (_MSC_VER)
+static inline FILE* my_fopen(char const* _FileName, char const* _Mode) { FILE* fp = NULL; fopen_s(&fp, _FileName, _Mode); return fp; }
+#define fopen my_fopen
+#endif
 
 namespace nd{
     using Vertices = std::vector<float>;

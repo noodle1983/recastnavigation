@@ -11,7 +11,7 @@ namespace nd{
 
     class NavMeshWrapper{
     public:
-        static const int MAX_POLYS = 256;
+        static const int MAX_POLYS = 2048;
         static const int MAX_SMOOTH = 2048;
 
         NavMeshWrapper();

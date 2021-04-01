@@ -12,4 +12,10 @@
 #include <new>
 #include <stdio.h>
 
+#if defined (_MSC_VER)
+static inline FILE* my_fopen(char const* _FileName, char const* _Mode) { FILE* fp = NULL; fopen_s(&fp, _FileName, _Mode); return fp; }
+#define fopen my_fopen
+#endif
+
+
 #endif

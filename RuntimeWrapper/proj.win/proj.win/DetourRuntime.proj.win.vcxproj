@@ -137,8 +137,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>echo "$(TargetPath) -&gt; ..\..\..\..\Assets\NavimeshMarker\RuntimePlugins\x64\"
-cp $(TargetPath) ..\..\..\..\Assets\NavimeshMarker\RuntimePlugins\x64\</Command>
+      <Command>echo "$(TargetPath) -&gt; $(ProjectDir)..\..\..\..\Assets\NavimeshMarker\RuntimePlugins\x64\"
+cp $(TargetPath) $(ProjectDir)..\..\..\..\Assets\NavimeshMarker\RuntimePlugins\x64\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -161,13 +161,13 @@ cp $(TargetPath) ..\..\..\..\Assets\NavimeshMarker\RuntimePlugins\x64\</Command>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PROJWIN32_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..;../../../</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../;../;../../../Detour/Include;../../../DetourTileCache/Include;../../../DetourCrowd/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -175,6 +175,10 @@ cp $(TargetPath) ..\..\..\..\Assets\NavimeshMarker\RuntimePlugins\x64\</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>echo "$(TargetPath) -&gt; $(ProjectDir)..\..\..\..\Assets\NavimeshMarker\RuntimePlugins\x64\"
+cp $(TargetPath) $(ProjectDir)..\..\..\..\Assets\NavimeshMarker\RuntimePlugins\x64\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -325,6 +325,9 @@ float NavMeshWrapper::raycast(float* start, float *end)
     }
 
 	dtRaycastHit hit;
+	memset(&hit, 0, sizeof(dtRaycastHit));
+	hit.maxPath = MAX_POLYS;
+	hit.path = queryPolysM;
     status = navQueryM->raycast(startRef, start, end, &queryFilterM, 0, &hit);
 	if (dtStatusFailed(status)){
 		return -1;

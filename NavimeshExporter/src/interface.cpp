@@ -307,7 +307,7 @@ static char* dupstr(const char* str) {
 	if (str == nullptr) { return nullptr; }
 	int len = (int)strlen(str) + 1;
 	char* ret = new char[len];
-	strcpy(ret, str);
+	if (len > 1) { memcpy(ret, str, len - 1); }
 	ret[len - 1] = 0;
 	return ret;
 }
