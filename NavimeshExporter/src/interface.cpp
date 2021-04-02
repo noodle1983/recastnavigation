@@ -315,11 +315,15 @@ static char* dupstr(const char* str) {
 char* exportDetourFormatFile(const char* detourMeshPath, const char* detourBinPath){
     auto mesh = parseMesh(detourMeshPath);
 	if (mesh == nullptr) { return dupstr("failed to parse the detour mesh file!"); }
+	shared_ptr<Mesh> meshDeletor(mesh);
+
 	auto& vertices = mesh->vertices;
 	auto& vi = mesh->triangles;
 	auto& trianglesFlag = mesh->trianglesFlag;
 	auto& trianglesAreaType = mesh->trianglesAreaType;
 	auto& lineNeis = mesh->lineNeis;
+
+	if (vertices.size() == 0 || vi.size() == 0) { return dupstr("empty mesh!"); }
 
     struct NavimeshTileData tileData;
     memset(&tileData, 0, sizeof(NavimeshTileData));
@@ -402,23 +406,19 @@ char* exportDetourFormatFile(const char* detourMeshPath, const char* detourBinPa
 		if (!navMesh)
 		{
 			dtFree(outData);
-			delete mesh;
 			return dupstr("Could not create Detour navmesh");
 		}
-		
+		shared_ptr<dtNavMesh> navMeshDeletor(navMesh, [](auto p) {dtFreeNavMesh(p); });
+
 		dtStatus status = navMesh->init(outData, outDataSize, DT_TILE_FREE_DATA);
 		if (dtStatusFailed(status))
 		{
 			dtFree(outData);
-			dtFreeNavMesh(navMesh);
-			delete mesh;
 			return dupstr("Could not init Detour navmesh");
 		}
 
         saveAll(detourBinPath, navMesh);
-		dtFreeNavMesh(navMesh);
     }
-	delete mesh;
     return nullptr;
 }
 
@@ -552,6 +552,7 @@ char* exportTiledDetourFormatFile(const char* detourMeshPath, const char* detour
 	{
 		int polyCount = (int)tiledMesh.triangles.size() / 3;
 		if (polyCount > params.maxPolys) { return dupstr("too many polys in a tile!"); }
+		if (tiledMesh.vertices.size() == 0 || tiledMesh.triangles.size() == 0) { continue; }
 
 		int dataSize = 0;
 		unsigned char* data = buildTileMesh(&tiledMesh, dataSize);
