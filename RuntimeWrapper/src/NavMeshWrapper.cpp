@@ -112,7 +112,7 @@ dtNavMesh* loadAll(const char* path)
 NavMeshWrapper::NavMeshWrapper()
     : navMeshM(nullptr)
     , navQueryM(nullptr)
-    , queryExtM{1, 1, 1}
+    , queryExtM{1, 1000, 1}
 {
     queryFilterM.setIncludeFlags(SAMPLE_POLYFLAGS_ALL ^ SAMPLE_POLYFLAGS_DISABLED);
     queryFilterM.setExcludeFlags(0);
