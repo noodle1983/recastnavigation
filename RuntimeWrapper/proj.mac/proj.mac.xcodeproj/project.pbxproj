@@ -1,0 +1,415 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5E191FD6263D87B70025460B /* NavMeshWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FC2263D87B60025460B /* NavMeshWrapper.cpp */; };
+		5E191FD7263D87B70025460B /* nd_DetourTileCache_DetourTileCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FC3263D87B60025460B /* nd_DetourTileCache_DetourTileCache.cpp */; };
+		5E191FD8263D87B70025460B /* interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FC4263D87B60025460B /* interface.cpp */; };
+		5E191FD9263D87B70025460B /* nd_DetourCrowd_DetourCrowd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FC6263D87B60025460B /* nd_DetourCrowd_DetourCrowd.cpp */; };
+		5E191FDA263D87B70025460B /* nd_Detour_DetourNavMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FC7263D87B60025460B /* nd_Detour_DetourNavMesh.cpp */; };
+		5E191FDB263D87B70025460B /* nd_DetourCrowd_DetourPathCorridor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FC8263D87B60025460B /* nd_DetourCrowd_DetourPathCorridor.cpp */; };
+		5E191FDC263D87B70025460B /* nd_DetourCrowd_DetourPathQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FC9263D87B60025460B /* nd_DetourCrowd_DetourPathQueue.cpp */; };
+		5E191FDD263D87B70025460B /* nd_DetourCrowd_DetourProximityGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FCA263D87B60025460B /* nd_DetourCrowd_DetourProximityGrid.cpp */; };
+		5E191FDE263D87B70025460B /* nd_DetourTileCache_DetourTileCacheBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FCB263D87B60025460B /* nd_DetourTileCache_DetourTileCacheBuilder.cpp */; };
+		5E191FDF263D87B70025460B /* nd_Detour_DetourNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FCD263D87B60025460B /* nd_Detour_DetourNode.cpp */; };
+		5E191FE0263D87B70025460B /* nd_DetourCrowd_DetourObstacleAvoidance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FCE263D87B60025460B /* nd_DetourCrowd_DetourObstacleAvoidance.cpp */; };
+		5E191FE1263D87B70025460B /* nd_Detour_DetourNavMeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FCF263D87B60025460B /* nd_Detour_DetourNavMeshBuilder.cpp */; };
+		5E191FE2263D87B70025460B /* nd_Detour_DetourCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FD0263D87B70025460B /* nd_Detour_DetourCommon.cpp */; };
+		5E191FE3263D87B70025460B /* nd_Detour_DetourAssert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FD2263D87B70025460B /* nd_Detour_DetourAssert.cpp */; };
+		5E191FE4263D87B70025460B /* nd_DetourCrowd_DetourLocalBoundary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FD3263D87B70025460B /* nd_DetourCrowd_DetourLocalBoundary.cpp */; };
+		5E191FE5263D87B70025460B /* nd_Detour_DetourAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FD4263D87B70025460B /* nd_Detour_DetourAlloc.cpp */; };
+		5E191FE6263D87B70025460B /* nd_Detour_DetourNavMeshQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E191FD5263D87B70025460B /* nd_Detour_DetourNavMeshQuery.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5E191F9B26354D200025460B /* RuntimeWrapper.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RuntimeWrapper.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E191F9E26354D200025460B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5E191FB326354EE70025460B /* libmacho.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libmacho.tbd; path = usr/lib/system/libmacho.tbd; sourceTree = SDKROOT; };
+		5E191FC2263D87B60025460B /* NavMeshWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NavMeshWrapper.cpp; sourceTree = "<group>"; };
+		5E191FC3263D87B60025460B /* nd_DetourTileCache_DetourTileCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_DetourTileCache_DetourTileCache.cpp; sourceTree = "<group>"; };
+		5E191FC4263D87B60025460B /* interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = interface.cpp; sourceTree = "<group>"; };
+		5E191FC5263D87B60025460B /* interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
+		5E191FC6263D87B60025460B /* nd_DetourCrowd_DetourCrowd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_DetourCrowd_DetourCrowd.cpp; sourceTree = "<group>"; };
+		5E191FC7263D87B60025460B /* nd_Detour_DetourNavMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_Detour_DetourNavMesh.cpp; sourceTree = "<group>"; };
+		5E191FC8263D87B60025460B /* nd_DetourCrowd_DetourPathCorridor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_DetourCrowd_DetourPathCorridor.cpp; sourceTree = "<group>"; };
+		5E191FC9263D87B60025460B /* nd_DetourCrowd_DetourPathQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_DetourCrowd_DetourPathQueue.cpp; sourceTree = "<group>"; };
+		5E191FCA263D87B60025460B /* nd_DetourCrowd_DetourProximityGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_DetourCrowd_DetourProximityGrid.cpp; sourceTree = "<group>"; };
+		5E191FCB263D87B60025460B /* nd_DetourTileCache_DetourTileCacheBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_DetourTileCache_DetourTileCacheBuilder.cpp; sourceTree = "<group>"; };
+		5E191FCC263D87B60025460B /* nd_header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nd_header.h; sourceTree = "<group>"; };
+		5E191FCD263D87B60025460B /* nd_Detour_DetourNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_Detour_DetourNode.cpp; sourceTree = "<group>"; };
+		5E191FCE263D87B60025460B /* nd_DetourCrowd_DetourObstacleAvoidance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_DetourCrowd_DetourObstacleAvoidance.cpp; sourceTree = "<group>"; };
+		5E191FCF263D87B60025460B /* nd_Detour_DetourNavMeshBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_Detour_DetourNavMeshBuilder.cpp; sourceTree = "<group>"; };
+		5E191FD0263D87B70025460B /* nd_Detour_DetourCommon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_Detour_DetourCommon.cpp; sourceTree = "<group>"; };
+		5E191FD1263D87B70025460B /* NavMeshWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavMeshWrapper.h; sourceTree = "<group>"; };
+		5E191FD2263D87B70025460B /* nd_Detour_DetourAssert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_Detour_DetourAssert.cpp; sourceTree = "<group>"; };
+		5E191FD3263D87B70025460B /* nd_DetourCrowd_DetourLocalBoundary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_DetourCrowd_DetourLocalBoundary.cpp; sourceTree = "<group>"; };
+		5E191FD4263D87B70025460B /* nd_Detour_DetourAlloc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_Detour_DetourAlloc.cpp; sourceTree = "<group>"; };
+		5E191FD5263D87B70025460B /* nd_Detour_DetourNavMeshQuery.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_Detour_DetourNavMeshQuery.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5E191F9826354D200025460B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5E191F9226354D200025460B = {
+			isa = PBXGroup;
+			children = (
+				5E191FA426354D3C0025460B /* src */,
+				5E191F9D26354D200025460B /* proj.mac */,
+				5E191F9C26354D200025460B /* Products */,
+				5E191FB226354EE70025460B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		5E191F9C26354D200025460B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5E191F9B26354D200025460B /* RuntimeWrapper.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5E191F9D26354D200025460B /* proj.mac */ = {
+			isa = PBXGroup;
+			children = (
+				5E191F9E26354D200025460B /* Info.plist */,
+			);
+			path = proj.mac;
+			sourceTree = "<group>";
+		};
+		5E191FA426354D3C0025460B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				5E191FC4263D87B60025460B /* interface.cpp */,
+				5E191FC5263D87B60025460B /* interface.h */,
+				5E191FC2263D87B60025460B /* NavMeshWrapper.cpp */,
+				5E191FD1263D87B70025460B /* NavMeshWrapper.h */,
+				5E191FD4263D87B70025460B /* nd_Detour_DetourAlloc.cpp */,
+				5E191FD2263D87B70025460B /* nd_Detour_DetourAssert.cpp */,
+				5E191FD0263D87B70025460B /* nd_Detour_DetourCommon.cpp */,
+				5E191FC7263D87B60025460B /* nd_Detour_DetourNavMesh.cpp */,
+				5E191FCF263D87B60025460B /* nd_Detour_DetourNavMeshBuilder.cpp */,
+				5E191FD5263D87B70025460B /* nd_Detour_DetourNavMeshQuery.cpp */,
+				5E191FCD263D87B60025460B /* nd_Detour_DetourNode.cpp */,
+				5E191FC6263D87B60025460B /* nd_DetourCrowd_DetourCrowd.cpp */,
+				5E191FD3263D87B70025460B /* nd_DetourCrowd_DetourLocalBoundary.cpp */,
+				5E191FCE263D87B60025460B /* nd_DetourCrowd_DetourObstacleAvoidance.cpp */,
+				5E191FC8263D87B60025460B /* nd_DetourCrowd_DetourPathCorridor.cpp */,
+				5E191FC9263D87B60025460B /* nd_DetourCrowd_DetourPathQueue.cpp */,
+				5E191FCA263D87B60025460B /* nd_DetourCrowd_DetourProximityGrid.cpp */,
+				5E191FC3263D87B60025460B /* nd_DetourTileCache_DetourTileCache.cpp */,
+				5E191FCB263D87B60025460B /* nd_DetourTileCache_DetourTileCacheBuilder.cpp */,
+				5E191FCC263D87B60025460B /* nd_header.h */,
+			);
+			name = src;
+			path = ../src;
+			sourceTree = "<group>";
+		};
+		5E191FB226354EE70025460B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5E191FB326354EE70025460B /* libmacho.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5E191F9A26354D200025460B /* RuntimeWrapper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5E191FA126354D200025460B /* Build configuration list for PBXNativeTarget "RuntimeWrapper" */;
+			buildPhases = (
+				5E191F9726354D200025460B /* Sources */,
+				5E191F9826354D200025460B /* Frameworks */,
+				5E191F9926354D200025460B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RuntimeWrapper;
+			productName = proj.mac;
+			productReference = 5E191F9B26354D200025460B /* RuntimeWrapper.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5E191F9326354D200025460B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = ludong;
+				TargetAttributes = {
+					5E191F9A26354D200025460B = {
+						CreatedOnToolsVersion = 11.4;
+					};
+				};
+			};
+			buildConfigurationList = 5E191F9626354D200025460B /* Build configuration list for PBXProject "proj.mac" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5E191F9226354D200025460B;
+			productRefGroup = 5E191F9C26354D200025460B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5E191F9A26354D200025460B /* RuntimeWrapper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5E191F9926354D200025460B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5E191F9726354D200025460B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E191FD6263D87B70025460B /* NavMeshWrapper.cpp in Sources */,
+				5E191FE0263D87B70025460B /* nd_DetourCrowd_DetourObstacleAvoidance.cpp in Sources */,
+				5E191FD7263D87B70025460B /* nd_DetourTileCache_DetourTileCache.cpp in Sources */,
+				5E191FE6263D87B70025460B /* nd_Detour_DetourNavMeshQuery.cpp in Sources */,
+				5E191FE2263D87B70025460B /* nd_Detour_DetourCommon.cpp in Sources */,
+				5E191FDB263D87B70025460B /* nd_DetourCrowd_DetourPathCorridor.cpp in Sources */,
+				5E191FD8263D87B70025460B /* interface.cpp in Sources */,
+				5E191FDC263D87B70025460B /* nd_DetourCrowd_DetourPathQueue.cpp in Sources */,
+				5E191FE3263D87B70025460B /* nd_Detour_DetourAssert.cpp in Sources */,
+				5E191FE4263D87B70025460B /* nd_DetourCrowd_DetourLocalBoundary.cpp in Sources */,
+				5E191FDF263D87B70025460B /* nd_Detour_DetourNode.cpp in Sources */,
+				5E191FDA263D87B70025460B /* nd_Detour_DetourNavMesh.cpp in Sources */,
+				5E191FE5263D87B70025460B /* nd_Detour_DetourAlloc.cpp in Sources */,
+				5E191FD9263D87B70025460B /* nd_DetourCrowd_DetourCrowd.cpp in Sources */,
+				5E191FDE263D87B70025460B /* nd_DetourTileCache_DetourTileCacheBuilder.cpp in Sources */,
+				5E191FE1263D87B70025460B /* nd_Detour_DetourNavMeshBuilder.cpp in Sources */,
+				5E191FDD263D87B70025460B /* nd_DetourCrowd_DetourProximityGrid.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5E191F9F26354D200025460B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(inherited)",
+					..,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5E191FA026354D200025460B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(inherited)",
+					..,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		5E191FA226354D200025460B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(inherited)",
+					..,
+					../../Detour/Include,
+					../src,
+					../../DetourTileCache/Include,
+					../../DetourCrowd/Include,
+				);
+				INFOPLIST_FILE = proj.mac/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "cn.noodle1983.RuntimeWrapper.proj-mac";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		5E191FA326354D200025460B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(inherited)",
+					..,
+					../../Detour/Include,
+					../src,
+					../../DetourTileCache/Include,
+					../../DetourCrowd/Include,
+				);
+				INFOPLIST_FILE = proj.mac/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "cn.noodle1983.RuntimeWrapper.proj-mac";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5E191F9626354D200025460B /* Build configuration list for PBXProject "proj.mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E191F9F26354D200025460B /* Debug */,
+				5E191FA026354D200025460B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5E191FA126354D200025460B /* Build configuration list for PBXNativeTarget "RuntimeWrapper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E191FA226354D200025460B /* Debug */,
+				5E191FA326354D200025460B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5E191F9326354D200025460B /* Project object */;
+}
