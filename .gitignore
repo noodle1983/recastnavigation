@@ -10,6 +10,7 @@
 *.idb
 cscope.*
 .lib
+obj
 
 ## Linux exes have no extension
 RecastDemo/Bin/RecastDemo
