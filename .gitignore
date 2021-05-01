@@ -11,6 +11,8 @@
 cscope.*
 .lib
 obj
+build
+*.bundle
 
 ## Linux exes have no extension
 RecastDemo/Bin/RecastDemo
