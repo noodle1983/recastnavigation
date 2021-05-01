@@ -27,7 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5E191F9B26354D200025460B /* RuntimeWrapper.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RuntimeWrapper.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E191F9B26354D200025460B /* DetourRuntime.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DetourRuntime.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E191F9E26354D200025460B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5E191FB326354EE70025460B /* libmacho.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libmacho.tbd; path = usr/lib/system/libmacho.tbd; sourceTree = SDKROOT; };
 		5E191FC2263D87B60025460B /* NavMeshWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NavMeshWrapper.cpp; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 		5E191F9C26354D200025460B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5E191F9B26354D200025460B /* RuntimeWrapper.bundle */,
+				5E191F9B26354D200025460B /* DetourRuntime.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,9 +128,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5E191F9A26354D200025460B /* RuntimeWrapper */ = {
+		5E191F9A26354D200025460B /* DetourRuntime */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5E191FA126354D200025460B /* Build configuration list for PBXNativeTarget "RuntimeWrapper" */;
+			buildConfigurationList = 5E191FA126354D200025460B /* Build configuration list for PBXNativeTarget "DetourRuntime" */;
 			buildPhases = (
 				5E191F9726354D200025460B /* Sources */,
 				5E191F9826354D200025460B /* Frameworks */,
@@ -140,9 +140,9 @@
 			);
 			dependencies = (
 			);
-			name = RuntimeWrapper;
+			name = DetourRuntime;
 			productName = proj.mac;
-			productReference = 5E191F9B26354D200025460B /* RuntimeWrapper.bundle */;
+			productReference = 5E191F9B26354D200025460B /* DetourRuntime.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -172,7 +172,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5E191F9A26354D200025460B /* RuntimeWrapper */,
+				5E191F9A26354D200025460B /* DetourRuntime */,
 			);
 		};
 /* End PBXProject section */
@@ -400,7 +400,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5E191FA126354D200025460B /* Build configuration list for PBXNativeTarget "RuntimeWrapper" */ = {
+		5E191FA126354D200025460B /* Build configuration list for PBXNativeTarget "DetourRuntime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E191FA226354D200025460B /* Debug */,

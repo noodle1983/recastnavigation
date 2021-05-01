@@ -42,7 +42,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5E191FF0263D8FE00025460B /* libRuntimeWrapper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRuntimeWrapper.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E191FF0263D8FE00025460B /* libDetourRuntime.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDetourRuntime.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E191FF3263D8FE00025460B /* proj_ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = proj_ios.h; sourceTree = "<group>"; };
 		5E191FF4263D8FE00025460B /* proj_ios.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = proj_ios.m; sourceTree = "<group>"; };
 		5E191FFD263D91540025460B /* nd_DetourCrowd_DetourPathCorridor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nd_DetourCrowd_DetourPathCorridor.cpp; sourceTree = "<group>"; };
@@ -90,7 +90,7 @@
 		5E191FF1263D8FE00025460B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5E191FF0263D8FE00025460B /* libRuntimeWrapper.a */,
+				5E191FF0263D8FE00025460B /* libDetourRuntime.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -135,9 +135,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5E191FEF263D8FE00025460B /* RuntimeWrapper */ = {
+		5E191FEF263D8FE00025460B /* DetourRuntime */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5E191FF9263D8FE00025460B /* Build configuration list for PBXNativeTarget "RuntimeWrapper" */;
+			buildConfigurationList = 5E191FF9263D8FE00025460B /* Build configuration list for PBXNativeTarget "DetourRuntime" */;
 			buildPhases = (
 				5E191FEC263D8FE00025460B /* Sources */,
 				5E191FED263D8FE00025460B /* Frameworks */,
@@ -147,9 +147,9 @@
 			);
 			dependencies = (
 			);
-			name = RuntimeWrapper;
+			name = DetourRuntime;
 			productName = proj.ios;
-			productReference = 5E191FF0263D8FE00025460B /* libRuntimeWrapper.a */;
+			productReference = 5E191FF0263D8FE00025460B /* libDetourRuntime.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -179,7 +179,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5E191FEF263D8FE00025460B /* RuntimeWrapper */,
+				5E191FEF263D8FE00025460B /* DetourRuntime */,
 			);
 		};
 /* End PBXProject section */
@@ -371,7 +371,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5E191FF9263D8FE00025460B /* Build configuration list for PBXNativeTarget "RuntimeWrapper" */ = {
+		5E191FF9263D8FE00025460B /* Build configuration list for PBXNativeTarget "DetourRuntime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E191FFA263D8FE00025460B /* Debug */,
